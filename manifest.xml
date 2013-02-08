@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+        <name>Notifications Override</name>
+        <author>Cash Costello and Dan Dutrow</author>
+        <version>1.8</version>
+        <description>Elgg pretty notification system</description>
+        <website>https://www.jhu.edu</website>
+        <licence>GPL 2</licence>
+		<category>cooler</category>
+        <copyright>JHU/APL 2012"</copyright>
+        <requires>
+	        <type>elgg_release</type>
+	        <version>1.8</version>
+        </requires>
+        
+        <requires>
+        	<type>plugin</type>
+        	<name>notifications</name>
+        	<version>1.7</version>
+        </requires>
+
+		<requires>
+			<type>priority</type>
+			<priority>after</priority>
+			<plugin>notifications</plugin>
+		</requires>
+        
+</plugin_manifest>
