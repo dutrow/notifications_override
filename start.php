@@ -1,6 +1,6 @@
 <?php
 /**
- * Cooler notifications override plugin 
+ * JHU notifications override plugin 
  */
 
 elgg_register_event_handler('init', 'system', 'notify_init');

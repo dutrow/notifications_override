@@ -51,7 +51,7 @@ $english = array(
 
 	'friend:newfriend:subject' => "%s is now following you",
 	'friend:newfriend:reciprocate' => "\n\nTo follow %s, click this link: %s\n\n",
-	'friend:newfriend:body' => "%s is now following you on Cooler.\n%s\nTo view this person's profile, click here:\n\n%s\n\nPlease do not reply to this email.\n",
+	'friend:newfriend:body' => "%s is now following you.\n%s\nTo view this person's profile, click here:\n\n%s\n\nPlease do not reply to this email.\n",
 
 	'comment:notify:subject' => "(%s) %s - comment by %s",	
 	'comment:notify:body' => "You have a new comment on your item \"%s\" from %s. It reads:\n\n\n%s\n\n\nTo reply or view the original item, click here:\n%s",

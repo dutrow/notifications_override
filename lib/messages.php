@@ -362,8 +362,8 @@ function notify_new_friend($event, $type, $object) {
 		// does the reciprocal relationship exist?
 		$reciprocate_text = '';
 		if (check_entity_relationship($user_two->guid, 'friend', $user_one->guid) === false) {
-			// this requires the Cooler plugin be activated
-			$reciprocate_url = "cooler/follow/" . $user_one->guid;
+			// shortcut to add a friend. may fail if not logged in
+			$reciprocate_url = "action/friends/add?friend=" . $user_one->guid;
 			$reciprocate_url = elgg_normalize_url($reciprocate_url);
 			$reciprocate_text = elgg_echo('friend:newfriend:reciprocate', array($user_one->name, $reciprocate_url));
 		}
