@@ -146,6 +146,9 @@ function notify_page_message($hook, $type, $result, $params) {
 	}
 }
 
+/**
+ * Create questions/answers notification message
+ */
 function notify_answers_message($hook, $type, $result, $params) {
 	$entity = $params['entity'];
 
@@ -298,7 +301,6 @@ function notify_forum_reply_message($hook, $type, $message, $params) {
 
 /**
  * Create photo notification message
- * @todo
  */
 function notify_photos_message($hook, $entity_type, $returnvalue, $params) {
 	$entity = $params['entity'];

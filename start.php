@@ -136,8 +136,6 @@ function notify_email_handler(ElggEntity $from, ElggUser $to, $subject, $message
 		$msg = elgg_echo('NotificationException:MissingParameter', array('to'));
 		throw new NotificationException($msg);
 	}
-
-	/*** begin cooler mods ***/
 	
 	// skip users with no email address - means they have left the lab
 	if ($to->email == "") {
@@ -155,32 +153,26 @@ function notify_email_handler(ElggEntity $from, ElggUser $to, $subject, $message
 	} else {
 		$message .= "\n\nYour user notification settings:\n{$CONFIG->wwwroot}notifications/personal/{$to->username}/";
 	}
-
-	$subject = $CONFIG->sitename . ': ' . $subject;
-	
-	// @todo - reply to headers
-	//if ($params['replyto'])
-	//	$headers .= "Reply-To: " . $params['replyto'] . '@' . get_site_domain($CONFIG->site_guid) . $header_eol;
-
-	/*** end cooler mods ***/
-
 	// To
 	$to = $to->email;
 
 	// From
 	$site = get_entity($CONFIG->site_guid);
 	// If there's an email address, use it - but only if its not from a user.
-	//if (!($from instanceof ElggUser) && ($from->email || $from->name)) {
-	//	$from = empty($from->name) ? $from->email : $from->name;
-	//} else 
-		
-	if ($site && ( $site->email && $site->name)) {
+	if (!($from instanceof ElggUser) && $from->email && $from->name) {
+		$from = $from->name . "<$from->email>";	
+	} else if (!($from instanceof ElggUser) && $from->name && $site->email) {
+		$from = $from->name . "<$site->email>";	
+	} else if ($site && $site->email && $site->name) {
 		// Use email address of current site if we cannot use sender's email
-		$from = $site->name . "<$site->email>";		
+		$from = $site->name . "<$site->email>";
 	} else {
 		// If all else fails, use the domain of the site.
 		$from = $CONFIG->sitename . '<noreply@' . get_site_domain($CONFIG->site_guid) . '>';
 	}
+	
+	// Reply-To
+	$headers .= "Reply-To: " . '<noreply@' . get_site_domain($CONFIG->site_guid) . '>' . $header_eol;
 
 	return elgg_send_email($from, $to, $subject, $message);
 }
