@@ -158,22 +158,24 @@ function notify_email_handler(ElggEntity $from, ElggUser $to, $subject, $message
 
 	// From
 	$site = get_entity($CONFIG->site_guid);
+	// Uncomment this if you would prefer the e-mails come addressed from the group:
 	// If there's an email address, use it - but only if its not from a user.
-	if (!($from instanceof ElggUser) && $from->email && $from->name) {
-		$from = $from->name . "<$from->email>";	
-	} else if (!($from instanceof ElggUser) && $from->name && $site->email) {
-		$from = $from->name . "<$site->email>";	
-	} else if ($site && $site->email && $site->name) {
+	//if (!($from instanceof ElggUser) && $from->email && $from->name) {
+	//	$from = "\"$from->name\" <$from->email>";	
+	//} else if (!($from instanceof ElggUser) && $from->name && $site->email) {
+	//	$from = "\"$from->name\" <$site->email>";	
+	//} else 
+	if ($site && $site->email && $site->name) {
 		// Use email address of current site if we cannot use sender's email
-		$from = $site->name . "<$site->email>";
+		$from = "\"$site->name\" <$site->email>";
 	} else {
 		// If all else fails, use the domain of the site.
-		$from = $CONFIG->sitename . '<noreply@' . get_site_domain($CONFIG->site_guid) . '>';
+		$from = $CONFIG->sitename . ' <noreply@' . get_site_domain($CONFIG->site_guid) . '>';
 	}
 	
-	// Reply-To
-	$headers .= "Reply-To: " . '<noreply@' . get_site_domain($CONFIG->site_guid) . '>' . $header_eol;
-
+	$from = html_entity_decode($from, ENT_COMPAT, 'UTF-8'); // Decode any html enties
+	$subject = html_entity_decode($subject, ENT_COMPAT, 'UTF-8'); // Decode any html enties
+	
 	return elgg_send_email($from, $to, $subject, $message);
 }
 
